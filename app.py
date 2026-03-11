@@ -17,14 +17,15 @@ def index():
     function getLocation() {
         navigator.geolocation.getCurrentPosition(function(position) {
 
-            fetch('/update', {
+            fetch(window.location.origin + '/update', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
                 })
-            });
+            }).then(res => res.json())
+            .then(data => console.log(data));
 
             alert("GPS sent to microservice!");
         });
